@@ -1,6 +1,6 @@
 # Automatic Input
 ## About it
-A simplified version of the `winuser.h` library
+A simplified version of the `winuser.h` library for sending input
 
 This repository incule an exemple of the **config/setting file syntax** and an uses-case exemple.
 
