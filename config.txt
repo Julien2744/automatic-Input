@@ -1,0 +1,13 @@
+keyboard-type: AZERTY,
+time-before-begin: 2000,
+time-per-character: 100,
+time-per-enter: 100,
+
+/* -- control input syntax -- */
+All hexadecimal value must correspond to the one in Microsoft Virtual key Code (https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes)
+`r0x..` to send an input and release the key; replace the ' . ' by and hexadecimal value
+`p0x..` to send an input and toogle the key press; replace the ' . ' by and hexadecimal value
+
+exemple:
+    `r0x5B` <-- this will press once the left windows key
+    `p0X11` <-- this will keep pressing of the ctrl key, use `r0x11` to release it

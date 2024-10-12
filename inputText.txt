@@ -1,0 +1,1 @@
+This exemple will press the left Windows key:`r0x5B`
