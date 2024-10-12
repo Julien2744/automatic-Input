@@ -2,11 +2,12 @@
 ## About it
 A simplified version of the `winuser.h` library
 
-This repositorie incule an exemple of the **config/setting file syntax** and an uses-case exemple
+This repository incule an exemple of the **config/setting file syntax** and an uses-case exemple.
 
 > [!WARNING]
-> I only made this to exercice myself, and decided to publish this publicly
-> The class and example are not supposed to be practically used
+> I only made this to exercice myself, and decided to publish this publicly.
+> 
+> The class and example are not supposed to be practically used !
 
 # doc
 ## public objects
