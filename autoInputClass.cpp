@@ -6,53 +6,11 @@
 
 #include "autoInputClass.h"
 
-// constructor with a config/setting file
-// read the config .txt file
-autoInput::autoInput(ifstream& configFile)
-{
-    string parameter = "";
-    
-    // check the 5 line of the config file to change the coresponding variables
-    for(unsigned short i=0; i<4; i++) {
-        //get the text in between the ' : ' and the ' , '
-        getline(configFile, parameter);
-        size_t beginFind = parameter.find(':');
-        size_t endFind = parameter.find(',');
-
-        string value = parameter.substr(beginFind+2, (endFind-beginFind)-2);
-        
-        //check if the substring text is valid and change the settings value
-        switch(i) {
-            case 0:
-                if(value == "QWERTY") { keyboardType = qwerty; }
-                else if(value == "AZERTY") { keyboardType = azerty; }
-                else { std::cerr << "invalid keyboard type" << std::endl;}
-                break;
-            case 1:
-                beginDelay = stoi(value);
-                break;
-            case 2:
-                charDelay = stoi(value);
-                break;
-            case 3:
-                enterDelay = stoi(value);
-                break;
-        }
-    }
-    
-    // INPUT variable initialisation
-    ip.type = INPUT_KEYBOARD;
-    ip.ki.wScan = 0; // hardware scan code for key
-    ip.ki.time = 0;
-    ip.ki.dwExtraInfo = 0;
-}
-
 //constructor without a config file
-autoInput::autoInput(config kbT, unsigned long db, unsigned int cd, unsigned int ed)
+autoInput::autoInput(keyboard_type kbT, unsigned int cd, unsigned int ed)
 {
     // settings variables initialisation
     keyboardType = kbT;
-    beginDelay = db;
     charDelay = cd;
     enterDelay = ed;
 
@@ -64,23 +22,11 @@ autoInput::autoInput(config kbT, unsigned long db, unsigned int cd, unsigned int
 }
 
 //set the class config for sending input
-void autoInput::setConfig(keyboard_type Keyboard_Type, long begin_Delay, unsigned int char_Delay, unsigned int enter_Delay, bool auto_Enter)
+void autoInput::setConfig(keyboard_type Keyboard_Type, unsigned int char_Delay, unsigned int enter_Delay, bool auto_Enter)
 {
     keyboardType = Keyboard_Type;
-    beginDelay = begin_Delay;
     charDelay = char_Delay;
     enterDelay = enter_Delay;
-}
-
-//countdown
-void autoInput::startBeginDelay()
-{
-    cout << "Begin in: " << beginDelay << " milliseconds" << endl;
-    for(unsigned long i=1; i<=beginDelay; i+=1000) {
-        cout << "..." << i/1000;
-        Sleep(1000);
-    }
-    cout << endl;
 }
 
 // ASCII character to microsoft virtual key code convertor
@@ -451,9 +397,6 @@ string autoInput::getConfig(config value) const
             if(keyboardType == qwerty) {return "qwerty";}
             else if(keyboardType == azerty) {return "azerty";}
             else {return "undefine";}
-            break;
-        case timeBeforeBegin:
-            return to_string(beginDelay);
             break;
         case timePerChar:
             return to_string(charDelay);
