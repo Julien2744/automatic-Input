@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <winuser.h> // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 #include <windows.h>
+#include <winuser.h> // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 
 #include "autoInputClass.h"
 
@@ -22,7 +22,7 @@ autoInput::autoInput(keyboard_type kbT, unsigned int cd, unsigned int ed)
 }
 
 //set the class config for sending input
-void autoInput::setConfig(keyboard_type Keyboard_Type, unsigned int char_Delay, unsigned int enter_Delay, bool auto_Enter)
+void autoInput::setConfig(keyboard_type Keyboard_Type, unsigned int char_Delay, unsigned int enter_Delay)
 {
     keyboardType = Keyboard_Type;
     charDelay = char_Delay;
@@ -32,7 +32,7 @@ void autoInput::setConfig(keyboard_type Keyboard_Type, unsigned int char_Delay, 
 // ASCII character to microsoft virtual key code convertor
 int autoInput::asciiToVKC(int asciiVal, keyboard_type kbType)
 {
-    if(asciiVal >= 0x48 && asciiVal <= 0x5A) { //capitalize character in ASCII
+    if(asciiVal >= 0x41 && asciiVal <= 0x5A) { //capitalize character in ASCII
         return asciiVal;
     }
     else if(asciiVal >= 0x30 && asciiVal <= 0x39) { //number
@@ -43,136 +43,136 @@ int autoInput::asciiToVKC(int asciiVal, keyboard_type kbType)
     }
     else if(kbType == azerty){ //special character in azerty layout that need convertion
         switch(asciiVal) { //warning: some of the return need another key to be pressed ex: ' # ' or ' . '
-            case 0x21: // !
-                return 0xDF; break;
-            case 0x22: // "
-                return 0x33; break;
-            case 0x23: // # need alt-gr
-                return 0x33; break;
-            case 0x24: // $
-                return 0xBA; break;
-            case 0x25: // % need shift
-                return 0xC0; break;
-            case 0x26: // &
-                return 0x31; break;
-            case 0x27: // '
-                return 0x34; break;
-            case 0x28: // (
-                return 0x35; break;
-            case 0x29: // )
-                return 0xDB; break;
-            case 0x2A: // *
-                return 0x6A; break;
-            case 0x2B: // +
-                return 0x6B; break;
-            case 0x2C: // ,
-                return 0xBC; break;
-            case 0x2D: // -
-                return 0x6D; break;
-            case 0x2E: // .
-                return 0x6E; break;
-            case 0x2F: // / need shift
-                return 0xBF; break;
-            case 0x3A: // :
-                return 0xBF; break;
-            case 0x3B: // ;
-                return 0xBE; break;
-            case 0x3C: // <
-                return 0xE2; break;
-            case 0x3D: // =
-                return 0xBB; break;
-            case 0x3E: // > need shift
-                return 0xE2; break;
-            case 0x3F: // ? need shift
-                return 0xBC; break;
-            case 0x40: // @ need alt-gr
-                return 0x30; break;
-            case 0x5B: // [ need alt-gr
-                return 0x35; break;
-            case 0x5C: // anti-slash need alt-gr
-                return 0x38; break;
-            case 0x5D: // ] need alt-gr
-                return 0xDB; break;
-            case 0x5E: // ^ need lat-gr
-                return 0x39; break;
-            case 0x5F: // _
-                return 0x38; break;
-            case 0x7B: // { need alt-gr
-                return 0x34; break;
-            case 0x7C: // | need alt-gr
-                return 0x36; break;
-            case 0x7D: // } need alt-gr
-                return 0xBB; break;
-            default: // can be space-bar or other
-                return asciiVal;
-                break;
+        case 0x21: // !
+            return 0xDF; break;
+        case 0x22: // "
+            return 0x33; break;
+        case 0x23: // # need alt-gr
+            return 0x33; break;
+        case 0x24: // $
+            return 0xBA; break;
+        case 0x25: // % need shift
+            return 0xC0; break;
+        case 0x26: // &
+            return 0x31; break;
+        case 0x27: // '
+            return 0x34; break;
+        case 0x28: // (
+            return 0x35; break;
+        case 0x29: // )
+            return 0xDB; break;
+        case 0x2A: // *
+            return 0x6A; break;
+        case 0x2B: // +
+            return 0x6B; break;
+        case 0x2C: // ,
+            return 0xBC; break;
+        case 0x2D: // -
+            return 0x6D; break;
+        case 0x2E: // .
+            return 0x6E; break;
+        case 0x2F: // / need shift
+            return 0xBF; break;
+        case 0x3A: // :
+            return 0xBF; break;
+        case 0x3B: // ;
+            return 0xBE; break;
+        case 0x3C: // <
+            return 0xE2; break;
+        case 0x3D: // =
+            return 0xBB; break;
+        case 0x3E: // > need shift
+            return 0xE2; break;
+        case 0x3F: // ? need shift
+            return 0xBC; break;
+        case 0x40: // @ need alt-gr
+            return 0x30; break;
+        case 0x5B: // [ need alt-gr
+            return 0x35; break;
+        case 0x5C: // anti-slash need alt-gr
+            return 0x38; break;
+        case 0x5D: // ] need alt-gr
+            return 0xDB; break;
+        case 0x5E: // ^ need lat-gr
+            return 0x39; break;
+        case 0x5F: // _
+            return 0x38; break;
+        case 0x7B: // { need alt-gr
+            return 0x34; break;
+        case 0x7C: // | need alt-gr
+            return 0x36; break;
+        case 0x7D: // } need alt-gr
+            return 0xBB; break;
+        default: // can be space-bar or other
+            return asciiVal;
+            break;
         }
     }
     else if(kbType == qwerty) { //special character in qwerty layout that need convertion
         switch(asciiVal) { //warning: some of the return need another key to be pressed ex: ' # ' or ' ! '
-            case 0x21: // ! need shift
-                return 0x31; break; 
-            case 0x22: // " need shift
-                return 0xDE; break;
-            case 0x23: // # need shift
-                return 0x33; break;
-            case 0x24: // $ need shift
-                return 0x34; break;
-            case 0x25: // % need shift
-                return 0x35; break;
-            case 0x26: // & need shift
-                return 0x37; break;
-            case 0x27: // '
-                return 0xDE; break;
-            case 0x28: // ( need shift
-                return 0x39; break;
-            case 0x29: // ) need shift
-                return 0x30; break;
-            case 0x2A: // *
-                return 0x6A; break;
-            case 0x2B: // +
-                return 0x6B; break;
-            case 0x2C: // ,
-                return 0xBC; break;
-            case 0x2D: // -
-                return 0x6D; break;
-            case 0x2E: // .
-                return 0x6E; break;
-            case 0x2F: // / need shift
-                return 0xBF; break;
-            case 0x3A: // : need shift
-                return 0xBA; break;
-            case 0x3B: // ;
-                return 0xBA; break;
-            case 0x3C: // < need shift
-                return 0xBC; break;
-            case 0x3D: // =
-                return 0xBB; break;
-            case 0x3E: // > need shift
-                return 0xBE; break;
-            case 0x3F: // ? need shift
-                return 0xBF; break;
-            case 0x40: // @ need shift
-                return 0x32; break;
-            case 0x5B: // [
-                return 0xDB; break;
-            case 0x5C: // anti-slash
-                return 0xDC; break;
-            case 0x5D: // ]
-                return 0xDD; break;
-            case 0x5E: // ^ need shift
-                return 0x36; break;
-            case 0x5F: // _ need shift
-                return 0xBD; break;
-            case 0x7B: // { need shift
-                return 0xDB; break;
-            case 0x7C: // | need shift
-                return 0xDC; break;
-            case 0x7D: // } need shift
-                return 0xDD; break;
-            default: // can be space-bar or other
-                return asciiVal;
-                break;
+        case 0x21: // ! need shift
+            return 0x31; break;
+        case 0x22: // " need shift
+            return 0xDE; break;
+        case 0x23: // # need shift
+            return 0x33; break;
+        case 0x24: // $ need shift
+            return 0x34; break;
+        case 0x25: // % need shift
+            return 0x35; break;
+        case 0x26: // & need shift
+            return 0x37; break;
+        case 0x27: // '
+            return 0xDE; break;
+        case 0x28: // ( need shift
+            return 0x39; break;
+        case 0x29: // ) need shift
+            return 0x30; break;
+        case 0x2A: // *
+            return 0x6A; break;
+        case 0x2B: // +
+            return 0x6B; break;
+        case 0x2C: // ,
+            return 0xBC; break;
+        case 0x2D: // -
+            return 0x6D; break;
+        case 0x2E: // .
+            return 0x6E; break;
+        case 0x2F: // / need shift
+            return 0xBF; break;
+        case 0x3A: // : need shift
+            return 0xBA; break;
+        case 0x3B: // ;
+            return 0xBA; break;
+        case 0x3C: // < need shift
+            return 0xBC; break;
+        case 0x3D: // =
+            return 0xBB; break;
+        case 0x3E: // > need shift
+            return 0xBE; break;
+        case 0x3F: // ? need shift
+            return 0xBF; break;
+        case 0x40: // @ need shift
+            return 0x32; break;
+        case 0x5B: // [
+            return 0xDB; break;
+        case 0x5C: // anti-slash
+            return 0xDC; break;
+        case 0x5D: // ]
+            return 0xDD; break;
+        case 0x5E: // ^ need shift
+            return 0x36; break;
+        case 0x5F: // _ need shift
+            return 0xBD; break;
+        case 0x7B: // { need shift
+            return 0xDB; break;
+        case 0x7C: // | need shift
+            return 0xDC; break;
+        case 0x7D: // } need shift
+            return 0xDD; break;
+        default: // can be space-bar or other
+            return asciiVal;
+            break;
         }
     }
     else { //undefine keyboard type
@@ -188,7 +188,7 @@ void autoInput::sendInputRaw(int keyValue, bool releaseKey)
     ip.ki.wVk = keyValue;
     ip.ki.dwFlags = 0; //hold the key
     SendInput(1, &ip, sizeof(INPUT));
-    
+
     if(releaseKey) {
         Sleep(charDelay);
         ip.ki.dwFlags = KEYEVENTF_KEYUP; //realease the key
@@ -202,10 +202,10 @@ void autoInput::sendInputRaw(int keyValue, bool releaseKey)
 void autoInput::sendInput(char character, bool releaseKey)
 {
     //std::cout << "input " << character  << " => 0d" << (int)character << std::endl;
-    
+
     bool shift = false;
-    
-    if(character >= 0x48 && character <= 0x5A) { //capitalize character in ASCII
+
+    if(character >= 0x41 && character <= 0x5A) { //capitalize character in ASCII
         // keep the shift key pressed
         ip.ki.wVk = 0x10; //shift key
         ip.ki.dwFlags = 0; //hold the key
@@ -332,23 +332,23 @@ void autoInput::sendInput(char character, bool releaseKey)
         ip.ki.dwFlags = KEYEVENTF_KEYUP; //release the key for the other char to be sended
         SendInput(1, &ip, sizeof(INPUT));
     }
-    
+
     if(shift) { //caps lock off
         Sleep(charDelay);
-        
-        ip.ki.wVk = 0x10; 
+
+        ip.ki.wVk = 0x10;
         ip.ki.dwFlags = KEYEVENTF_KEYUP;
         SendInput(1, &ip, sizeof(INPUT));
         caps = false;
     }
-    
+
     if(character == 0x0D) {
         Sleep(enterDelay);
     }
     else {
         Sleep(charDelay);
     }
-    
+
 }
 
 //send text using a char array
@@ -381,7 +381,7 @@ void autoInput::sendInput(string text, bool autoEnter)
     if(autoEnter) {
         text += 0x0D;
     }
-    
+
     //for each char in the string send it
     for(unsigned int i = 0; i < text.length(); i++) {
         int character = text.at(i);
@@ -393,16 +393,16 @@ void autoInput::sendInput(string text, bool autoEnter)
 string autoInput::getConfig(config value) const
 {
     switch (value) {
-        case KeyBoardType:
-            if(keyboardType == qwerty) {return "qwerty";}
-            else if(keyboardType == azerty) {return "azerty";}
-            else {return "undefine";}
-            break;
-        case timePerChar:
-            return to_string(charDelay);
-            break;
-        case timePerEnter:
-            return to_string(enterDelay);
-            break;
+    case KeyBoardType:
+        if(keyboardType == qwerty) {return "qwerty";}
+        else if(keyboardType == azerty) {return "azerty";}
+        else {return "undefine";}
+        break;
+    case timePerChar:
+        return to_string(charDelay);
+        break;
+    case timePerEnter:
+        return to_string(enterDelay);
+        break;
     }
 }

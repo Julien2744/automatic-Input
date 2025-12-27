@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <winuser.h>
 #include <windows.h>
+#include <winuser.h>
 
 #include "autoInputClass.h"
+#include "autoInputClass.cpp"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ using namespace std;
 void setConfig(ifstream& configFile, autoInput& auto_input)
 {
     string parameter = "";
-    
+
     autoInput::keyboard_type keyboardType = autoInput::keyboard_type::qwerty;
     unsigned int charDelay = 5;
     unsigned int enterDelay = 5;
@@ -28,26 +29,26 @@ void setConfig(ifstream& configFile, autoInput& auto_input)
 
         //check if the substring text is valid and change the settings value
         switch(i) {
-            case 0:
-                if(value == "QWERTY") { keyboardType = autoInput::keyboard_type::qwerty; }
-                else if(value == "AZERTY") { keyboardType = autoInput::keyboard_type::azerty; }
-                else { std::cerr << "invalid keyboard type" << std::endl;}
-                break;
-            case 1:
-                charDelay = stoi(value);
-                break;
-            case 2:
-                enterDelay = stoi(value);
-                break;
+        case 0:
+            if(value == "QWERTY") { keyboardType = autoInput::keyboard_type::qwerty; }
+            else if(value == "AZERTY") { keyboardType = autoInput::keyboard_type::azerty; }
+            else { std::cerr << "invalid keyboard type" << std::endl;}
+            break;
+        case 1:
+            charDelay = stoi(value);
+            break;
+        case 2:
+            enterDelay = stoi(value);
+            break;
         }
     }
 
-    auto_input.setConfig(keyboardType, charDelay, enterDelay, true);
+    auto_input.setConfig(keyboardType, charDelay, enterDelay);
 }
 
-int hexCharToInt(char hex) 
+int hexCharToInt(char hex)
 {
-    if(hex >= 48 && hex <= 57) {
+    if(hex >= 41 && hex <= 57) {
         return hex - 48;
     }
     else if(hex >= 65 && hex <= 70) {
@@ -71,12 +72,13 @@ int main()
 
     string text = "";
 
+    cout << "started" << endl;
     //for every line of the txt file send it via the class method
     while(!inputFile.eof()) {
         getline(inputFile, text);
-        
+
         text += 0x0D; //enter key
-    
+
         //for each char in the string send it
         bool controlInput = false;
         string controlText = "";
@@ -100,11 +102,11 @@ int main()
 
                 if(controlText == "r0x") { //release key
                     controlChar = (hexCharToInt(text.at(i+1))*16) + hexCharToInt(text.at(i+2));
-                    autoInput.sendInputRaw(controlChar, true); 
+                    autoInput.sendInputRaw(controlChar, true);
                 }
                 else if(controlText == "p0x") { //toggle key press
-                    controlChar = (hexCharToInt(text.at(i+1))*16) + hexCharToInt(text.at(i+2)); 
-                    autoInput.sendInputRaw(controlChar, false); 
+                    controlChar = (hexCharToInt(text.at(i+1))*16) + hexCharToInt(text.at(i+2));
+                    autoInput.sendInputRaw(controlChar, false);
                 }
             }
 
