@@ -27,7 +27,7 @@ enumarations that are needed for class method
 - ### `autoInput(keyboard_type keyboard_type, unsigned int char_Delay, unsigned int enter_Delay)`
 Main contsructor
 ## class methods
-- ### `void setConfig(keyboard_type Keyboard_Type, unsigned int char_Delay, unsigned int enter_Delay, bool auto_Enter)`
+- ### `void setConfig(keyboard_type Keyboard_Type, unsigned int char_Delay, unsigned int enter_Delay`
 method that change the class config
 - ### `int asciiToVKC(int asciiVal, keyboard_type kbType)`
 Convert the `ASCII value` to return it to it's `Microsoft virtual key code` equivalent, **warning the return key value may require pressing another key**.
@@ -45,3 +45,4 @@ Send the given char array as an input *(use `sendInput` method)*
 Send the given string as an input *(use `sendInput` method)*
 - ### `string getConfig(config) const`
 Return the given `config` value as a string
+
